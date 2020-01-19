@@ -1,0 +1,33 @@
+!SESSION 2020-01-19 00:00:48.660 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_121
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86 -data C:\Developer\STM32L475\rtos_scratch
+
+!ENTRY com.iar.cdt.arm.toolchain.cmsis.adapter 1 0 2020-01-19 00:01:02.442
+!MESSAGE Using CMSIS pack repositories: http://links.iar.com/cmsis/pack/
+
+!ENTRY com.iar.cmsismanager.product 1 0 2020-01-19 00:01:07.515
+!MESSAGE CMSIS Agent interface registered with service registry at ServiceLocation(host:\\.\pipe\iar-cspy-cpp-binary-com.iar.thrift.service.registry-729bbbf0-d20c-44e3-a9b1-9aff5166fa84-1, port:0, protocol:Binary, transport:Pipe)
+
+!ENTRY com.iar.cmsismanager.product 1 0 2020-01-19 10:02:30.628
+!MESSAGE CMSIS Agent interface deregistered with service registry at ServiceLocation(host:\\.\pipe\iar-cspy-cpp-binary-com.iar.thrift.service.registry-729bbbf0-d20c-44e3-a9b1-9aff5166fa84-1, port:0, protocol:Binary, transport:Pipe)
+
+!ENTRY com.iar.cmsismanager.product 1 0 2020-01-19 10:02:30.634
+!MESSAGE Exiting workbench is response to shutdown() command.
+!SESSION 2020-01-19 10:04:17.023 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=1.8.0_121
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86 -data C:\Developer\STM32L475\custom_rtos\iar
+
+!ENTRY org.eclipse.core.resources 2 10035 2020-01-19 10:04:27.792
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.iar.cdt.arm.toolchain.cmsis.adapter 1 0 2020-01-19 10:04:28.448
+!MESSAGE Using CMSIS pack repositories: http://links.iar.com/cmsis/pack/
+
+!ENTRY com.iar.cmsismanager.product 1 0 2020-01-19 10:04:38.909
+!MESSAGE CMSIS Agent interface registered with service registry at ServiceLocation(host:\\.\pipe\iar-cspy-cpp-binary-com.iar.thrift.service.registry-f7bc87b1-d08a-443c-9fc8-9768f1e0c3d2-1, port:0, protocol:Binary, transport:Pipe)
