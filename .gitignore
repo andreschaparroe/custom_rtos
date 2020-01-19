@@ -1,3 +1,17 @@
 *.lock
 *.log
 *.xmi
+*.ini
+*.index
+*.dep
+*.out
+*.map
+*.ninja_log
+*.o
+*.pbi
+*.ninja
+*.pbd
+*.browse
+*.pbw
+*.dnx
+*.wsdt
