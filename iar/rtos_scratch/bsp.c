@@ -1,6 +1,7 @@
 #include <intrinsics.h>
 #include "stm32l4xx.h"
 #include "bsp.h"
+#include "rtos.h"
 
 
 void systick_init(void);
@@ -67,11 +68,18 @@ void systick_init(void)
                   | (1U << SysTick_CTRL_ENABLE_Pos)
                   | (1U << SysTick_CTRL_TICKINT_Pos);
     SysTick->VAL = 0U;
+
+    /* Set the sysTick interrupt priority (highest) */
+    NVIC_SetPriority(SysTick_IRQn, 0U);
 }
 
 void SysTick_Handler(void)
 {
     ++l_tickCtr;
+
+    __disable_interrupt();
+    OS_sched();
+    __enable_interrupt();
 }
 
 void gpio_init(void)

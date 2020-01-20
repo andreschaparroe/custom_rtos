@@ -2372,6 +2372,18 @@
         </settings>
     </configuration>
     <group>
+        <name>CMSIS-Pack</name>
+        <file>
+            <name>$PROJ_DIR$\RTE\RTE_Components.h</name>
+        </file>
+        <group>
+            <name>Device Startup</name>
+            <file>
+                <name>$PROJ_DIR$\RTE\Device\STM32L475VGTx\system_stm32l4xx.c</name>
+            </file>
+        </group>
+    </group>
+    <group>
         <name>src</name>
         <file>
             <name>$PROJ_DIR$\bsp.c</name>
@@ -2380,19 +2392,10 @@
             <name>$PROJ_DIR$\main.c</name>
         </file>
         <file>
-            <name>$PROJ_DIR$\startup.c</name>
+            <name>$PROJ_DIR$\rtos.c</name>
         </file>
-    </group>
-    <group>
-        <name>CMSIS-Pack</name>
-        <group>
-            <name>Device Startup</name>
-            <file>
-                <name>$PROJ_DIR$\RTE\Device\STM32L475VGTx\system_stm32l4xx.c</name>
-            </file>
-        </group>
         <file>
-            <name>$PROJ_DIR$\RTE\RTE_Components.h</name>
+            <name>$PROJ_DIR$\startup.c</name>
         </file>
     </group>
 </project>
