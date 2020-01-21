@@ -1,9 +1,15 @@
 #include <intrinsics.h>
 #include <stdint.h>
 #include "rtos.h"
+#include <assert.h>
 
+#define MAX_THREAD      (32 + 1)
 OSThread * volatile OS_curr; /* pointer to the current thread */
 OSThread * volatile OS_next; /* pointer to the next thread to execute */
+
+OSThread *OS_thread[32 + 1]; /* array of threads started so far */
+uint8_t OS_threadNum; /* number of threads started so far */
+uint8_t OS_currIdx; /* current thread index for round robin scheduling */
 
 void OS_init(void)
 {
@@ -22,18 +28,10 @@ void OS_init(void)
 }
 void OS_sched(void)
 {
-    extern OSThread blink_1;
-    extern OSThread blink_2;
-    /* OS_next = ... */
-    if(OS_curr == &blink_1)
-    {
-        OS_next = &blink_2;
-    }
-    else
-    {
-        OS_next = &blink_1;
-    }
+    ++OS_currIdx;
+    OS_currIdx = OS_currIdx % OS_threadNum;
 
+    OS_next = OS_thread[OS_currIdx];
 
     if(OS_next != OS_curr)
     {
@@ -82,6 +80,12 @@ void OSThread_start(
     {
         *sp = 0xDEADBEEF;
     }
+
+    assert(OS_threadNum < MAX_THREAD);
+
+    OS_thread[OS_threadNum] = me;
+    ++OS_threadNum;
+
 
 }
 
