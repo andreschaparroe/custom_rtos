@@ -16,7 +16,6 @@ OSThread blink_2;
 int main (void)
 {
 
-    BSP_init();
     OS_init();
 
     OSThread_start(&blink_1,
@@ -27,10 +26,7 @@ int main (void)
                    &main_blink_2,
                    stack_blink_2, sizeof(stack_blink_2));
 
-    while(1)
-    {
-
-    }
+    OS_run();
 //    return 0;
 }
 

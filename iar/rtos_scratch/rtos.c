@@ -39,6 +39,20 @@ void OS_sched(void)
         *(uint32_t volatile *)0xE000ED04 = (1U << 28);
     }
 }
+
+void OS_run(void)
+{
+    /* callback to configure and start interrupts */
+    OS_onStartup();
+
+    __disable_interrupt();
+    OS_sched();
+    __enable_interrupt();
+
+    /* the following code should never execute */
+    assert(0);
+}
+
 void OSThread_start(
     OSThread *me,
     OSThreadHandler threadHandler,

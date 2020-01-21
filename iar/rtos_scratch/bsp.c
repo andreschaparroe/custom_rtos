@@ -13,12 +13,8 @@ static uint32_t volatile l_tickCtr;
 
 void BSP_init(void)
 {
-
-    __asm(" CPSID i"); /*__disable_interrupt();*/
-    systick_init();
     gpio_init();
-    __asm(" CPSIE i"); /*__enable_interrupt();*/
-
+    systick_init();
 }
 
 uint32_t BSP_getTick(void)
@@ -119,6 +115,14 @@ void gpio_set(GPIO_TypeDef * port, uint32_t pin)
 void gpio_reset(GPIO_TypeDef * port, uint32_t pin)
 {
     port->BSRR = (1U << (GPIO_BSRR_BR0_Pos + pin));
+}
+
+void OS_onStartup(void)
+{
+    __asm(" CPSID i"); /*__disable_interrupt();*/
+    BSP_init();
+
+//    __asm(" CPSIE i"); /*__enable_interrupt();*/
 }
 
 /* @brief Error handling
