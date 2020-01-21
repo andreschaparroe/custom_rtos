@@ -15,3 +15,6 @@
 *.pbw
 *.dnx
 *.wsdt
+*.snap
+*.resources
+*.sim

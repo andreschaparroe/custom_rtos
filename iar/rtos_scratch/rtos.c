@@ -22,7 +22,19 @@ void OS_init(void)
 }
 void OS_sched(void)
 {
+    extern OSThread blink_1;
+    extern OSThread blink_2;
     /* OS_next = ... */
+    if(OS_curr == &blink_1)
+    {
+        OS_next = &blink_2;
+    }
+    else
+    {
+        OS_next = &blink_1;
+    }
+
+
     if(OS_next != OS_curr)
     {
         /* Change PendSV exception state to pending */
