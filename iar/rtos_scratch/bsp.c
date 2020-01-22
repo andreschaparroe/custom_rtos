@@ -17,26 +17,6 @@ void BSP_init(void)
     systick_init();
 }
 
-uint32_t BSP_getTick(void)
-{
-    uint32_t tickCtr;
-
-    __disable_interrupt();
-    tickCtr = l_tickCtr; /* critical section */
-    __enable_interrupt();
-
-    return tickCtr;
-}
-
-void BSP_delay(uint32_t ticks)
-{
-    uint32_t start = BSP_getTick();
-
-    while((BSP_getTick() - start)< ticks)
-    {
-    }
-}
-
 void BSP_ledOneOn(void)
 {
     gpio_set(LED1_PORT,LED1_PIN);
@@ -71,7 +51,7 @@ void systick_init(void)
 
 void SysTick_Handler(void)
 {
-    ++l_tickCtr;
+    OS_tick();
 
     __disable_interrupt();
     OS_sched();
@@ -123,6 +103,11 @@ void OS_onStartup(void)
     BSP_init();
 
 //    __asm(" CPSIE i"); /*__enable_interrupt();*/
+}
+
+void OS_onIdle(void)
+{
+    __WFI();
 }
 
 /* @brief Error handling

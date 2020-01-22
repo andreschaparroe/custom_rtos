@@ -204,7 +204,7 @@ void (* const __vector_table[])(void) @ ".intvec" =
 };
 
 
-void Reset_Handler(void)
+__stackless void Reset_Handler(void)
 {
     __iar_program_start();
 }

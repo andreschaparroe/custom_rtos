@@ -10,8 +10,6 @@
 #define LED2_PORT       (GPIOB)
 
 void BSP_init(void);
-void BSP_delay(uint32_t ticks);
-uint32_t BSP_getTick(void);
 void BSP_ledOneOn(void);
 void BSP_ledOneOff(void);
 void BSP_ledTwoOn(void);

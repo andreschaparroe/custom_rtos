@@ -12,11 +12,13 @@ OSThread blink_1;
 uint32_t stack_blink_2[40];
 OSThread blink_2;
 
+uint32_t stack_idleThread[40];
+
 /* background code: sequential with blocking version */
 int main (void)
 {
 
-    OS_init();
+    OS_init(stack_idleThread, sizeof(stack_idleThread));
 
     OSThread_start(&blink_1,
                    &main_blink_1,
@@ -35,9 +37,9 @@ void main_blink_1(void)
     while(1)
     {
         BSP_ledOneOn();
-        BSP_delay(2);
+        OS_delay(2);
         BSP_ledOneOff();
-        BSP_delay(2);
+        OS_delay(2);
     }
 }
 
@@ -46,9 +48,9 @@ void main_blink_2(void)
     while(1)
     {
         BSP_ledTwoOn();
-        BSP_delay(2);
+        OS_delay(2);
         BSP_ledTwoOff();
-        BSP_delay(2);
+        OS_delay(2);
     }
 }
 

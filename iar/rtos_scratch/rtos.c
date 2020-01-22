@@ -10,8 +10,19 @@ OSThread * volatile OS_next; /* pointer to the next thread to execute */
 OSThread *OS_thread[32 + 1]; /* array of threads started so far */
 uint8_t OS_threadNum; /* number of threads started so far */
 uint8_t OS_currIdx; /* current thread index for round robin scheduling */
+uint32_t OS_readySet; /* bitmask of threads that are ready to run */
 
-void OS_init(void)
+OSThread idleThread;
+
+void main_idleThread(void)
+{
+    while(1)
+    {
+        OS_onIdle();
+    }
+}
+
+void OS_init(void *stkSto, uint32_t stkSize)
 {
     /* System handler priority register 3 (SHPR3)
      * Address: 0xE000ED20
@@ -25,11 +36,31 @@ void OS_init(void)
 
    /* Set the PendSV interrupt priority to the lowest level */
     *(uint32_t volatile *)0xE000ED20 |= (0xFFU << 16);
+
+    OSThread_start(&idleThread,
+                   &main_idleThread,
+                   stkSto, stkSize);
 }
+
 void OS_sched(void)
 {
-    ++OS_currIdx;
-    OS_currIdx = OS_currIdx % OS_threadNum;
+    /* OS_next = ... */
+    if(OS_readySet == 0U) /* Idle condition? */
+    {
+        OS_currIdx = 0U; /* index of the idle thread */
+    }
+    else
+    {
+        do
+        {
+            ++OS_currIdx;
+            if(OS_currIdx == OS_threadNum)
+            {
+                OS_currIdx = 1;
+            }
+
+        }while((OS_readySet & (1U << ( OS_currIdx - 1U))) == 0U);
+    }
 
     OS_next = OS_thread[OS_currIdx];
 
@@ -51,6 +82,33 @@ void OS_run(void)
 
     /* the following code should never execute */
     assert(0);
+}
+
+void OS_tick(void)
+{
+    uint8_t n;
+
+    for(n=1U; n < OS_threadNum; ++n)
+    {
+        if(OS_thread[n]->timeout != 0U)
+        {
+            --OS_thread[n]->timeout;
+            if(OS_thread[n]->timeout == 0U)
+            {
+                OS_readySet |= (1U << (n - 1U));
+            }
+        }
+    }
+}
+
+void OS_delay(uint32_t ticks)
+{
+    assert(OS_curr != OS_thread[0]);
+    __disable_interrupt();
+    OS_curr->timeout = ticks;
+    OS_readySet &= ~(1U << (OS_currIdx - 1U));
+    OS_sched();
+    __enable_interrupt();
 }
 
 void OSThread_start(
@@ -97,7 +155,14 @@ void OSThread_start(
 
     assert(OS_threadNum < MAX_THREAD);
 
+    /* register the thread with the OS */
     OS_thread[OS_threadNum] = me;
+
+    /* make the thread ready to run */
+    if(OS_threadNum > 0)
+    {
+        OS_readySet |= (1U << (OS_threadNum - 1U));
+    }
     ++OS_threadNum;
 
 
