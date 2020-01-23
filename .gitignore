@@ -18,3 +18,5 @@
 *.snap
 *.resources
 *.sim
+*.prefs
+*.xml

@@ -6,7 +6,7 @@ typedef struct
 {
     void *sp;           /* stack pointer*/
     uint32_t timeout;   /* timeout delay down-counter */
-
+    uint8_t prio;
     /* other attributes associated with a thread */
 }OSThread;
 
@@ -34,6 +34,7 @@ void OS_onStartup(void);
 
 void OSThread_start(
     OSThread *me,
+    uint8_t prio, /* thread priority*/
     OSThreadHandler threadHandler,
     void *stkSto, uint32_t stkSize);
 

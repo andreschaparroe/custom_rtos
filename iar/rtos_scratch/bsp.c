@@ -39,7 +39,7 @@ void BSP_ledTwoOff(void)
 
 void systick_init(void)
 {
-    SysTick->LOAD = SYSTEM_CLOCK/2U - 1;
+    SysTick->LOAD = SYSTEM_CLOCK/1U - 1;
     SysTick->CTRL = (1U << SysTick_CTRL_CLKSOURCE_Pos)
                   | (1U << SysTick_CTRL_ENABLE_Pos)
                   | (1U << SysTick_CTRL_TICKINT_Pos);
@@ -107,7 +107,7 @@ void OS_onStartup(void)
 
 void OS_onIdle(void)
 {
-    __WFI();
+//    __WFI();
 }
 
 /* @brief Error handling
